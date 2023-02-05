@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import './index.css';
-import ProductList from './ProductList';
+import "./index.css";
+import ProductListing from "./pages/ProductListing/ProductListing";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProductList />
+    <ProductListing />
   </React.StrictMode>,
-  document.getElementById('root')
-)
+  document.getElementById("root")
+);
