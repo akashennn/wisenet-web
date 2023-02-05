@@ -1,5 +1,6 @@
 import React from "react";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
+import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import { Category } from "../../types";
 
@@ -97,7 +98,7 @@ class ArticleList extends React.Component {
           <div className={"articles"}>{articles}</div>
         </div>
 
-        <div className={"footer"}>All Prices are in Sri Lankan rupees</div>
+        <Footer />
       </div>
     );
   }
