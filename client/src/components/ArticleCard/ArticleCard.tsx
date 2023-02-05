@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Article } from "../../types";
+import { TArticle } from "../../types";
 
 var intlNumberFormatValues = ["en-US", "currency", "LKR"];
 
@@ -9,7 +9,7 @@ export var formatter = new Intl.NumberFormat(intlNumberFormatValues[0], {
   currency: intlNumberFormatValues[2],
 });
 
-const ArticleCard = ({ article }: { article: Article }): JSX.Element => {
+const ArticleCard = ({ article }: { article: TArticle }): JSX.Element => {
   return (
     <Container>
       <img src={article.images[0].path} />
