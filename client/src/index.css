@@ -42,9 +42,3 @@ body {
   grid-area: content;
   grid-column: span 2;
 }
-
-.footer {
-  grid-area: footer;
-  background-color: lightblue;
-  text-align: center;
-}
