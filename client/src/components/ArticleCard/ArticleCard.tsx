@@ -1,6 +1,6 @@
 import React from "react";
+import styled from "styled-components";
 import { Article } from "../../types";
-import "./ArticleCard.css";
 
 var intlNumberFormatValues = ["en-US", "currency", "LKR"];
 
@@ -11,13 +11,29 @@ export var formatter = new Intl.NumberFormat(intlNumberFormatValues[0], {
 
 const ArticleCard = ({ article }: { article: Article }): JSX.Element => {
   return (
-    <div className={"article"}>
+    <Container>
       <img src={article.images[0].path} />
+
       <div>{article.name}</div>
+
       <div>{formatter.format(article.prices.value / 100)}</div>
+
       <section role="button">Add to cart</section>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  border: 1px solid lavenderblush;
+  padding: 10px;
+
+  section[role="button"] {
+    padding: 0.2em;
+    background-color: lightgoldenrodyellow;
+    border: 1px solid lightgray;
+    cursor: pointer;
+    text-align: center;
+  }
+`;
 
 export default ArticleCard;
