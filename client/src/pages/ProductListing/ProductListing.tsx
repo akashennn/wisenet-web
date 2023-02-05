@@ -2,12 +2,13 @@ import React from "react";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { Category } from "../../types";
+import Sidebar from "../../components/Sidebar";
+import { TCategory } from "../../types";
 
 import "./ProductListing.css";
 
 type State = {
-  categories: Category[];
+  categories: TCategory[];
 };
 
 class ArticleList extends React.Component {
@@ -57,34 +58,11 @@ class ArticleList extends React.Component {
   }
 
   render() {
-    var articles = this.state.categories.map((category) => {
-      return category.articles.map((article) => {
-        return <ArticleCard article={article} />;
-      });
-    });
-
     return (
       <div className={"page"}>
         <Header />
 
-        <div className={"sidebar"}>
-          <h3>Categories</h3>
-          {this.state.categories.length ? (
-            <ul>
-              {this.state.categories[0].childCategories.map(
-                ({ name, urlPath }) => {
-                  return (
-                    <li>
-                      <a href={`/${urlPath}`}>{name}</a>
-                    </li>
-                  );
-                }
-              )}
-            </ul>
-          ) : (
-            "Loading..."
-          )}
-        </div>
+        <Sidebar categories={this.state.categories} />
 
         <div className={"content"}>
           {this.state.categories.length ? (
@@ -95,7 +73,12 @@ class ArticleList extends React.Component {
           ) : (
             "Loading..."
           )}
-          <div className={"articles"}>{articles}</div>
+
+          <div className={"articles"}>
+            {this.state.categories.map((c) =>
+              c.articles.map((a) => <ArticleCard article={a} />)
+            )}
+          </div>
         </div>
 
         <Footer />
