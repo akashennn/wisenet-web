@@ -1,27 +1,27 @@
-export type Category = {
+export type TCategory = {
   name: string
-  articles: Article[]
+  articles: TArticle[]
   articleCount: number
-  childCategories: ChildCategory[]
+  childCategories: TChildCategory[]
 }
 
-export type Article = {
-  name:  string
+export type TArticle = {
+  name: string
   variantName: string
-  prices: Prices
-  images: Image[]
+  prices: TPrices
+  images: TImage[]
 }
 
-export type ChildCategory = {
+export type TChildCategory = {
   name: string
   urlPath: string
 }
 
-export type Prices = {
+export type TPrices = {
   currency: string
   value: number
 }
 
-export type Image = {
+export type TImage = {
   path: string
 }
