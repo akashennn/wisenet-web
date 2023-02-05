@@ -1,13 +1,23 @@
 import React from "react";
-import "./Header.css";
+import styled from "styled-components";
 
 const Header = (): JSX.Element => {
   return (
-    <div className={"header"}>
+    <Container>
       <strong>SHINE INT</strong>
-      <input placeholder={"Search"} />
-    </div>
+
+      <input placeholder="Search" />
+    </Container>
   );
 };
+
+const Container = styled.div`
+  grid-area: header;
+  background-color: lightblue;
+
+  input {
+    float: right;
+  }
+`;
 
 export default Header;
