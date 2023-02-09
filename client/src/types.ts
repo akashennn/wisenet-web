@@ -25,3 +25,10 @@ export type TPrices = {
 export type TImage = {
   path: string
 }
+
+// redux
+export type TSidebarCategory = {
+  id: number;
+  name: string;
+  urlPath: string;
+}
