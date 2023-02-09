@@ -1,21 +1,14 @@
 import React from "react";
-import { TCategory } from "../../types";
-import ChildCategory from "./ChildCategory";
+import { TSidebarCategory } from "../../types";
 
 type TProps = {
-  category: TCategory;
+  sidebarCategory: TSidebarCategory;
 };
 
-const Category = ({ category }: TProps): JSX.Element => {
+const Category = ({ sidebarCategory }: TProps): JSX.Element => {
   return (
     <li>
-      <a href="">{category.name}</a>
-
-      <ul>
-        {category.childCategories.map((childCategory) => (
-          <ChildCategory childCategory={childCategory} />
-        ))}
-      </ul>
+      <a href="">{sidebarCategory.name}</a>
     </li>
   );
 };
