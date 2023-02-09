@@ -1,18 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { TCategory } from "../../types";
+import { getAllCategories } from "../../redux/categoriesSlice";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import Category from "./Category";
 
-type TProps = {
-  categories: TCategory[];
-};
+const Sidebar = (): JSX.Element => {
+  // get data from redux
+  const { sidebarCategories, isLoading } = useAppSelector(
+    (state) => state.categories
+  );
 
-const Sidebar = ({ categories }: TProps): JSX.Element => {
+  // redux hooks to call functions
+  const dispatch = useAppDispatch();
+
+  // fetch categories data on load
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, []);
+
+  // handle loading
+  // TODO: add a loading spinner
+  if (isLoading) {
+    return <p>Loading!</p>;
+  }
+
   return (
     <Container>
       <ul>
-        {categories.map((category) => (
-          <Category category={category} />
+        {sidebarCategories.map((sidebarCategory) => (
+          <Category
+            key={sidebarCategory.id}
+            sidebarCategory={sidebarCategory}
+          />
         ))}
       </ul>
     </Container>
