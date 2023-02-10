@@ -53,6 +53,7 @@ const Container = styled.div`
       grid-area: content;
       grid-column: span 2;
       overflow: auto;
+      margin-bottom: 12px;
     }
   }
 `;
