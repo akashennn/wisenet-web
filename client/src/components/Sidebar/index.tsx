@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { getAllCategories } from "../../redux/categoriesSlice";
+import { getAllSidebarCategories } from "../../redux/categoriesSlice";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import Category from "./Category";
 
@@ -15,7 +15,7 @@ const Sidebar = (): JSX.Element => {
 
   // fetch categories data on load
   useEffect(() => {
-    dispatch(getAllCategories());
+    dispatch(getAllSidebarCategories());
   }, []);
 
   // handle loading
