@@ -1,58 +1,115 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { getCategory } from "../../redux/categoriesSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 const ProductListingPage = (): JSX.Element => {
   // get data from redux
-  const { category, activeCategoryId, isCategoryLoading } = useAppSelector(
-    (state) => state.categories
-  );
+  const { category, activeCategoryId, isCategoryLoading, searchText } =
+    useAppSelector((state) => state.categories);
 
   // redux hooks to call functions
   const dispatch = useAppDispatch();
 
-  // fetch data on load
+  // fetch initial data on load
   useEffect(() => {
     dispatch(getCategory(activeCategoryId));
   }, []);
 
   // until data fetches
   if (isCategoryLoading) {
-    return <p>Loading..</p>;
+    return <LoadingSpinner />;
   }
 
-  // incase category not found
+  // if category is not found
   if (category === null) {
-    return <p>Category data not found!</p>;
+    return (
+      <Container>
+        <p className="no-data-found-text">Invalid Category!</p>
+      </Container>
+    );
   }
 
-  // render component
+  // if no data found in the category
+  if (category.articles.length === 0) {
+    return (
+      <Container>
+        <p className="no-data-found-text">
+          No data found in {category.name} category
+        </p>
+      </Container>
+    );
+  }
+
+  // if no search result in the category
+  if (
+    category.articles.filter((a) =>
+      a.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+    ).length === 0
+  ) {
+    return (
+      <Container>
+        <p className="no-data-found-text">
+          No results found for "{searchText}" in {category.name} category
+        </p>
+      </Container>
+    );
+  }
+
   return (
     <Container>
-      <h1>
-        {category.name}
-        <small> ({category.articleCount})</small>
-      </h1>
-
       <div className="articles">
-        {/* incase articles not found */}
-        {category.articles.length === 0 ? (
-          <p>No data found</p>
-        ) : (
-          category.articles.map((a) => <ArticleCard article={a} key={a.name} />)
-        )}
+        {category.articles
+          .filter((a) =>
+            a.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+          )
+          .map((a) => (
+            <ArticleCard article={a} key={a.name} />
+          ))}
       </div>
     </Container>
   );
 };
 
 const Container = styled.div`
+  /* styles for mobile devices */
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  .no-data-found-text {
+    display: flex;
+    flex: 1 1 0%;
+    justify-content: center;
+    margin: 0;
+    align-items: center;
+  }
+
   .articles {
     display: grid;
-    grid-gap: 26px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 12px;
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+
+  .category-name {
+    margin: 0 0 12px 0;
+    font-weight: bold;
+    color: rgb(61, 61, 61);
+    font-size: 1.25rem;
+    line-height: 31px;
+  }
+
+  /* styles for tablets */
+  @media (min-width: 768px) {
+  }
+
+  /* styles for desktops */
+  @media (min-width: 1024px) {
+    .articles {
+      grid-template-columns: repeat(3, minmax(200px, 1fr));
+    }
   }
 `;
 
