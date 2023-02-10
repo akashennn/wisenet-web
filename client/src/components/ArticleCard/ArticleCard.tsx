@@ -1,38 +1,49 @@
 import React from "react";
 import styled from "styled-components";
 import { TArticle } from "../../types";
-
-var intlNumberFormatValues = ["en-US", "currency", "LKR"];
-
-export var formatter = new Intl.NumberFormat(intlNumberFormatValues[0], {
-  style: intlNumberFormatValues[1],
-  currency: intlNumberFormatValues[2],
-});
+import { formatter } from "../../utils/currency";
+import Button from "../Button/Button";
 
 const ArticleCard = ({ article }: { article: TArticle }): JSX.Element => {
   return (
     <Container>
-      <img src={article.images[0].path} />
+      <img className="image" src={article.images[0].path} alt={article.name} />
 
-      <div>{article.name}</div>
+      <p className="name">{article.name}</p>
 
-      <div>{formatter.format(article.prices.value / 100)}</div>
+      <p className="price">{formatter.format(article.prices.value / 100)}</p>
 
-      <section role="button">Add to cart</section>
+      <Button title="Add to cart" />
     </Container>
   );
 };
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   border: 1px solid lavenderblush;
   padding: 10px;
 
-  section[role="button"] {
-    padding: 0.2em;
-    background-color: lightgoldenrodyellow;
-    border: 1px solid lightgray;
-    cursor: pointer;
-    text-align: center;
+  .image {
+    object-fit: cover;
+    height: 290px;
+    width: 100%;
+  }
+
+  .name {
+    margin: 12px 0;
+    font-weight: bold;
+    color: rgb(61, 61, 61);
+    font-size: 1.25rem;
+    line-height: 19px;
+  }
+
+  .price {
+    margin: 0 0 12px 0;
+    font-size: 1rem;
+    line-height: 19px;
+    color: rgb(64, 69, 83);
   }
 `;
 
