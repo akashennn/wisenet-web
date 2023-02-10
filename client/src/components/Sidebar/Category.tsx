@@ -1,16 +1,25 @@
 import React from "react";
-import { TSidebarCategory } from "../../types";
+import { getCategory } from "../../redux/categoriesSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { TSidebarCategories } from "../../types";
 
 type TProps = {
-  sidebarCategory: TSidebarCategory;
+  sidebarCategory: TSidebarCategories;
 };
 
 const Category = ({ sidebarCategory }: TProps): JSX.Element => {
-  return (
-    <li>
-      <a href="">{sidebarCategory.name}</a>
-    </li>
-  );
+  // get data from redux
+  const { activeCategoryId } = useAppSelector((state) => state.categories);
+
+  // redux hooks to call functions
+  const dispatch = useAppDispatch();
+
+  // fetch data on list item click
+  const onClick = () => {
+    dispatch(getCategory(sidebarCategory.id));
+  };
+
+  return <li onClick={onClick}>{sidebarCategory.name}</li>;
 };
 
 export default Category;
