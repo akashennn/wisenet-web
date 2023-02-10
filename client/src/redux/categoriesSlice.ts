@@ -8,25 +8,30 @@ const COMMON_HEADERS = {
 };
 
 interface InitialState {
+    // sidebar component
     isSidebarCategoriesLoading: boolean;
     sidebarCategories: TSidebarCategories[];
-
     activeCategoryId: number;
 
+    // product listing page
     isCategoryLoading: boolean;
     category: TCategory | null;
+    searchText: string;
 }
 
 const initialState: InitialState = {
+    // sidebar component
     isSidebarCategoriesLoading: false,
     sidebarCategories: [],
-
     activeCategoryId: 1,
 
+    // product listing page
     isCategoryLoading: false,
     category: null,
+    searchText: '',
 }
 
+// fetch all categories for sidebar
 export const getAllSidebarCategories = createAsyncThunk('categories/getAllSidebarCategories', async () => {
     const graphqlQuery = {
         "operationName": "getAllSidebarCategories",
@@ -49,6 +54,7 @@ export const getAllSidebarCategories = createAsyncThunk('categories/getAllSideba
     return data.data.categories;
 });
 
+// fetch active category
 export const getCategory = createAsyncThunk('categories/getCategory', async (activeCategoryId: number) => {
     const graphqlQuery = {
         "operationName": "getCategory",
@@ -87,9 +93,9 @@ export const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
     reducers: {
-        // setCategories: (state, action) => {
-        //     state.data.push(action.payload);
-        // },
+        setSearchText: (state, { payload }) => {
+            state.searchText = payload;
+        },
     },
     extraReducers: builder => {
         builder
@@ -109,6 +115,9 @@ export const categoriesSlice = createSlice({
             // getCategory
             .addCase(getCategory.pending, (state) => {
                 state.isCategoryLoading = true;
+
+                // reset search text
+                state.searchText = '';
             })
             .addCase(getCategory.fulfilled, (state, { payload }) => {
                 console.log('payload', payload)
@@ -124,5 +133,7 @@ export const categoriesSlice = createSlice({
             })
     }
 });
+
+export const { setSearchText } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
