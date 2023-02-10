@@ -1,20 +1,7 @@
-export type TCategory = {
-  name: string
-  articles: TArticle[]
-  articleCount: number
-  childCategories: TChildCategory[]
-}
-
-export type TArticle = {
-  name: string
-  variantName: string
-  prices: TPrices
-  images: TImage[]
-}
-
-export type TChildCategory = {
-  name: string
-  urlPath: string
+export type TSidebarCategories = {
+  id: number;
+  name: string;
+  urlPath: string;
 }
 
 export type TPrices = {
@@ -26,9 +13,17 @@ export type TImage = {
   path: string
 }
 
-// redux
-export type TSidebarCategory = {
+export type TArticle = {
+  id: number;
+  name: string
+  variantName: string
+  prices: TPrices
+  images: TImage[]
+}
+
+export type TCategory = {
   id: number;
   name: string;
-  urlPath: string;
+  articleCount: number;
+  articles: TArticle[];
 }
