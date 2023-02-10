@@ -23,7 +23,7 @@ const Container = styled.div`
   flex-direction: column;
   flex: 1;
   border: 1px solid lavenderblush;
-  padding: 10px;
+  padding: 12px;
 
   .image {
     object-fit: cover;

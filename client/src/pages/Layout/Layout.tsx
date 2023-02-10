@@ -30,7 +30,6 @@ const Container = styled.div`
   margin: 0 auto;
 
   .content {
-    padding: 12px;
     display: flex;
     flex: 1;
   }
@@ -50,6 +49,7 @@ const Container = styled.div`
       "footer footer footer";
 
     .content {
+      padding: 12px;
       grid-area: content;
       grid-column: span 2;
       overflow: auto;

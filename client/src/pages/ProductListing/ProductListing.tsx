@@ -80,6 +80,7 @@ const Container = styled.div`
     display: grid;
     grid-gap: 12px;
     grid-template-columns: repeat(2, minmax(200px, 1fr));
+    margin-bottom: 12px;
   }
 
   .category-name {
