@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { getAllSidebarCategories } from "../../redux/categoriesSlice";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import Category from "./Category";
+import SidebarCategory from "./SidebarItem";
 
 const Sidebar = (): JSX.Element => {
   // get data from redux
@@ -28,7 +28,7 @@ const Sidebar = (): JSX.Element => {
     <Container>
       <ul>
         {sidebarCategories.map((sidebarCategory) => (
-          <Category
+          <SidebarCategory
             key={sidebarCategory.id}
             sidebarCategory={sidebarCategory}
           />
