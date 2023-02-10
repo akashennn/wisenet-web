@@ -6,24 +6,24 @@ import Category from "./Category";
 
 const Sidebar = (): JSX.Element => {
   // get data from redux
-  const { sidebarCategories, isLoading } = useAppSelector(
+  const { sidebarCategories, isSidebarCategoriesLoading } = useAppSelector(
     (state) => state.categories
   );
 
   // redux hooks to call functions
   const dispatch = useAppDispatch();
 
-  // fetch categories data on load
+  // fetch data on load
   useEffect(() => {
     dispatch(getAllSidebarCategories());
   }, []);
 
-  // handle loading
-  // TODO: add a loading spinner
-  if (isLoading) {
-    return <p>Loading!</p>;
+  // until data fetches
+  if (isSidebarCategoriesLoading) {
+    return <p>Loading..</p>;
   }
 
+  // render component
   return (
     <Container>
       <ul>
