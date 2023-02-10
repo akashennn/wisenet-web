@@ -1,94 +1,59 @@
-import React from "react";
+import React, { useEffect } from "react";
+import styled from "styled-components";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
-import Footer from "../../components/Footer/Footer";
-import Header from "../../components/Header/Header";
-import Sidebar from "../../components/Sidebar";
-import { TCategory } from "../../types";
+import { getCategory } from "../../redux/categoriesSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
-import "./ProductListing.css";
+const ProductListingPage = (): JSX.Element => {
+  // get data from redux
+  const { category, activeCategoryId, isCategoryLoading } = useAppSelector(
+    (state) => state.categories
+  );
 
-type State = {
-  categories: TCategory[];
-};
+  // redux hooks to call functions
+  const dispatch = useAppDispatch();
 
-class ArticleList extends React.Component {
-  state: State = {
-    categories: [],
-  };
+  // fetch data on load
+  useEffect(() => {
+    dispatch(getCategory(activeCategoryId));
+  }, []);
 
-  componentDidMount() {
-    var xhr = new XMLHttpRequest();
-
-    xhr.open("POST", "/graphql");
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.send(
-      JSON.stringify({
-        query: `{
-        categories {
-          name
-          articleCount
-          childCategories {
-            name
-            urlPath
-          }
-          articles {
-              name
-              variantName
-              prices {
-                currency
-                value
-              }
-              images {
-                path
-              }
-          }
-        }
-      }`,
-      })
-    );
-
-    xhr.onload = () => {
-      if (xhr.status === 200) {
-        var response = JSON.parse(xhr.response);
-
-        this.setState({ categories: response.data.categories });
-      }
-    };
+  // until data fetches
+  if (isCategoryLoading) {
+    return <p>Loading..</p>;
   }
 
-  render() {
-    return (
-      <div className={"page"}>
-        <Header />
+  // incase category not found
+  if (category === null) {
+    return <p>Category data not found!</p>;
+  }
 
-        <Sidebar categories={this.state.categories} />
+  // render component
+  return (
+    <Container>
+      <h1>
+        {category.name}
+        <small> ({category.articleCount})</small>
+      </h1>
 
-        <div className={"content"}>
-          {this.state.categories.length ? (
-            <h1>
-              {this.state.categories[0].name}
-              <small> ({this.state.categories[0].articleCount})</small>
-            </h1>
-          ) : (
-            "Loading..."
-          )}
-
-          <div className={"articles"}>
-            {this.state.categories.map((c) =>
-              c.articles.map((a) => <ArticleCard article={a} />)
-            )}
-          </div>
-        </div>
-
-        <Footer />
+      <div className="articles">
+        {/* incase articles not found */}
+        {category.articles.length === 0 ? (
+          <p>No data found</p>
+        ) : (
+          category.articles.map((a) => <ArticleCard article={a} key={a.name} />)
+        )}
       </div>
-    );
-  }
-}
-
-var PLP = () => {
-  return <ArticleList />;
+    </Container>
+  );
 };
 
-export default PLP;
+const Container = styled.div`
+  .articles {
+    display: grid;
+    grid-gap: 26px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+`;
+
+export default ProductListingPage;
