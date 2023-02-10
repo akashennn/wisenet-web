@@ -21,7 +21,11 @@ const Sidebar = (): JSX.Element => {
 
   // until data fetches
   if (isSidebarCategoriesLoading) {
-    return <LoadingSpinner />;
+    return (
+      <Container>
+        <LoadingSpinner />
+      </Container>
+    );
   }
 
   // render component
@@ -40,6 +44,8 @@ const Sidebar = (): JSX.Element => {
 };
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   grid-area: sidebar;
   background-color: lavender;
 
