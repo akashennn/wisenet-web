@@ -16,7 +16,7 @@ const Header = (): JSX.Element => {
       <p className="title">SHINE INT</p>
 
       <Input
-        placeholder="Search category..."
+        placeholder="Search..."
         value={searchText}
         onChange={(e) => dispatch(setSearchText(e.target.value))}
       />
