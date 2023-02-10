@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { getAllSidebarCategories } from "../../redux/categoriesSlice";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import SidebarCategory from "./SidebarItem";
 
 const Sidebar = (): JSX.Element => {
@@ -20,7 +21,7 @@ const Sidebar = (): JSX.Element => {
 
   // until data fetches
   if (isSidebarCategoriesLoading) {
-    return <p>Loading..</p>;
+    return <LoadingSpinner />;
   }
 
   // render component
@@ -49,8 +50,12 @@ const Container = styled.div`
   }
 
   ul li {
-    margin: 0 0 0 8px;
-    padding: 8px 0;
+    padding: 12px;
+  }
+
+  .active {
+    background: white;
+    font-weight: bold;
   }
 `;
 
