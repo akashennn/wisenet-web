@@ -19,7 +19,14 @@ const SidebarCategory = ({ sidebarCategory }: TProps): JSX.Element => {
     dispatch(getCategory(sidebarCategory.id));
   };
 
-  return <li onClick={onClick}>{sidebarCategory.name}</li>;
+  return (
+    <li
+      className={sidebarCategory.id === activeCategoryId ? "active" : ""}
+      onClick={onClick}
+    >
+      {sidebarCategory.name}
+    </li>
+  );
 };
 
 export default SidebarCategory;
