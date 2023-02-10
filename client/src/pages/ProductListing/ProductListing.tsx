@@ -36,8 +36,8 @@ const ProductListingPage = (): JSX.Element => {
 
   // if no search result in the category
   if (
-    category.articles.filter((a) =>
-      a.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+    category.articles.filter((article) =>
+      article.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
     ).length === 0
   ) {
     return (
@@ -51,11 +51,13 @@ const ProductListingPage = (): JSX.Element => {
     <Container>
       <div className="articles">
         {category.articles
-          .filter((a) =>
-            a.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+          .filter((article) =>
+            article.name
+              .toLocaleLowerCase()
+              .includes(searchText.toLocaleLowerCase())
           )
-          .map((a) => (
-            <ArticleCard article={a} key={a.name} />
+          .map((article) => (
+            <ArticleCard article={article} key={article.name} />
           ))}
       </div>
     </Container>
