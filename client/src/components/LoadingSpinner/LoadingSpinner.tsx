@@ -4,7 +4,7 @@ import styled from "styled-components";
 const LoadingSpinner = (): JSX.Element => {
   return (
     <Container>
-      <p className="no-data-found-text">Loading..</p>
+      <p className="text">Loading..</p>
     </Container>
   );
 };
@@ -14,7 +14,7 @@ const Container = styled.div`
   flex: 1;
   flex-direction: column;
 
-  .no-data-found-text {
+  .text {
     display: flex;
     flex: 1 1 0%;
     justify-content: center;
