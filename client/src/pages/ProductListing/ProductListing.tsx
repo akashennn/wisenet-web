@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import ArticleCard from "../../components/ArticleCard/ArticleCard";
+import EmptyResult from "../../components/EmptyResult/EmptyResult";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { getCategory } from "../../redux/categoriesSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -25,22 +26,12 @@ const ProductListingPage = (): JSX.Element => {
 
   // if category is not found
   if (category === null) {
-    return (
-      <Container>
-        <p className="no-data-found-text">Invalid Category!</p>
-      </Container>
-    );
+    return <EmptyResult text="Invalid Category!" />;
   }
 
   // if no data found in the category
   if (category.articles.length === 0) {
-    return (
-      <Container>
-        <p className="no-data-found-text">
-          No data found in {category.name} category
-        </p>
-      </Container>
-    );
+    return <EmptyResult text={`No data found in ${category.name} category`} />;
   }
 
   // if no search result in the category
@@ -50,11 +41,9 @@ const ProductListingPage = (): JSX.Element => {
     ).length === 0
   ) {
     return (
-      <Container>
-        <p className="no-data-found-text">
-          No results found for "{searchText}" in {category.name} category
-        </p>
-      </Container>
+      <EmptyResult
+        text={`No results found for "${searchText}" in ${category.name} category`}
+      />
     );
   }
 
