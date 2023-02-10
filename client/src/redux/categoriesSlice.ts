@@ -1,6 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TSidebarCategory } from '../types';
 
+const BASE_ENDPOINT = "/graphql";
+
+const COMMON_HEADERS = {
+    "Content-Type": "application/json"
+};
+
 interface InitialState {
     isLoading: boolean;
     sidebarCategories: TSidebarCategory[];
@@ -11,16 +17,10 @@ const initialState: InitialState = {
     sidebarCategories: [],
 }
 
-const baseEndpoint = "/graphql";
-
-const commonHeaders = {
-    "Content-Type": "application/json"
-};
-
-export const getAllCategories = createAsyncThunk('categories/getAllCategories', async () => {
+export const getAllSidebarCategories = createAsyncThunk('categories/getAllSidebarCategories', async () => {
     const graphqlQuery = {
-        "operationName": "fetchCategories",
-        "query": `query fetchCategories {
+        "operationName": "getAllSidebarCategories",
+        "query": `query getAllSidebarCategories {
             categories {
               id
               name
@@ -30,13 +30,11 @@ export const getAllCategories = createAsyncThunk('categories/getAllCategories', 
         "variables": {}
     };
 
-    const options = {
+    const response = await fetch(BASE_ENDPOINT, {
         "method": "POST",
-        "headers": commonHeaders,
+        "headers": COMMON_HEADERS,
         "body": JSON.stringify(graphqlQuery)
-    };
-
-    const response = await fetch(baseEndpoint, options);
+    });
     const data = await response.json();
     return data.data.categories;
 });
@@ -51,16 +49,16 @@ export const categoriesSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(getAllCategories.pending, (state) => {
+            .addCase(getAllSidebarCategories.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(getAllCategories.fulfilled, (state, { payload }) => {
+            .addCase(getAllSidebarCategories.fulfilled, (state, { payload }) => {
                 state.isLoading = false;
                 state.sidebarCategories = payload;
             })
-            .addCase(getAllCategories.rejected, (state, { payload }) => {
+            .addCase(getAllSidebarCategories.rejected, (state, { payload }) => {
                 state.isLoading = false;
-                console.error('getAllCategories.rejected', payload);
+                console.error('getAllSidebarCategories.rejected', payload);
             })
     }
 });
