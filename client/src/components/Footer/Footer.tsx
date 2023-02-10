@@ -9,6 +9,11 @@ const Container = styled.div`
   grid-area: footer;
   background-color: lightblue;
   text-align: center;
+  display: flex;
+  padding: 12px;
+  justify-content: center;
+  height: 48px;
+  box-sizing: border-box;
 `;
 
 export default Footer;
