@@ -22,24 +22,38 @@ const Layout = (): JSX.Element => {
 };
 
 const Container = styled.div`
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: 160px auto auto;
-  grid-template-areas:
-    "header header header"
-    "sidebar content content"
-    "footer footer footer";
-  margin: 6px;
+  /* styles for mobile devices */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 1024px;
+  margin: 0 auto;
 
   .content {
-    grid-area: content;
-    grid-column: span 2;
+    padding: 12px;
+    display: flex;
+    flex: 1;
   }
 
-  .articles {
+  /* styles for tablets */
+  @media (min-width: 768px) {
+  }
+
+  /* styles for desktops */
+  @media (min-width: 1024px) {
     display: grid;
-    grid-gap: 26px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: 240px auto;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header header header"
+      "sidebar content content"
+      "footer footer footer";
+
+    .content {
+      grid-area: content;
+      grid-column: span 2;
+      overflow: auto;
+    }
   }
 `;
 
