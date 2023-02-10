@@ -12,7 +12,6 @@ const Container = styled.div`
   display: flex;
   padding: 12px;
   justify-content: center;
-  height: 48px;
   box-sizing: border-box;
 `;
 
